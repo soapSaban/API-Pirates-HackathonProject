@@ -37,7 +37,7 @@ def get_base64_of_image(image_path):
         return base64.b64encode(img_file.read()).decode()
     
 # Add the background image with CSS that covers everything
-image_base64 = get_base64_of_image("background.png")
+image_base64 = get_base64_of_image("pexels-philkallahar-983200.jpg")
 st.markdown(
     f"""
     <style>
@@ -67,11 +67,13 @@ st.markdown(
     
     /* Ensure the main content area doesn't cut off the background */
     .main .block-container {{
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(28, 28, 30, 0.95); /* Dark charcoal background */
         border-radius: 10px;
         padding: 2rem;
         margin: 2rem 1rem 1rem 1rem;
         max-width: 95%;
+        color: #D3D3D3; /* Light gray text */
+        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     /* Fix for Streamlit's default padding that might cut off the background */
@@ -89,7 +91,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Apply custom CSS for styling with static background image
 # Apply custom CSS for styling with static background image
 st.markdown(f"""
 <style>
@@ -124,13 +125,15 @@ st.markdown(f"""
     
     /* Main content container with transparency */
     .main .block-container {{
-        background-color: rgba(255, 255, 255, 0.92);
+        background-color: rgba(28, 28, 30, 0.95); /* Dark charcoal background */
         border-radius: 10px;
         padding: 2rem;
         margin: 2rem 1rem 1rem 1rem;
         backdrop-filter: blur(5px);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         max-width: 95%;
+        color: #D3D3D3; /* Light gray text */
+        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
 
     /* Title container with proper centering */
@@ -146,7 +149,7 @@ st.markdown(f"""
     
     .main-header {{
         font-size: 2.5rem;
-        color: #ff4b4b;
+        color: #FF4500; /* Fiery orange-red */
         text-align: center;
         margin: 0 auto 0.5rem auto;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
@@ -157,43 +160,44 @@ st.markdown(f"""
     .subtitle {{
         text-align: center;
         font-size: 1.1rem;
-        color: #ffffff; /* Changed to white */
+        color: #ffffff; /* White */
         margin: 0 auto 1.5rem auto;
         width: 100%;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Added text shadow for better visibility */
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
         font-weight: 500;
     }}
     
     .sub-header {{
         font-size: 1.4rem;
-        color: #ffffff; /* Changed to white */
-        border-bottom: 2px solid #ff4b4b;
+        color: #ffffff; /* White */
+        border-bottom: 2px solid #FF4500; /* Fiery orange-red */
         padding-bottom: 0.3rem;
         margin-top: 1.2rem;
         margin-bottom: 0.8rem;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Added text shadow for better visibility */
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
         font-weight: 600;
     }}
     
     .section-header {{
         font-size: 1.2rem;
-        color: #2c3e50;
+        color: #D3D3D3; /* Light gray */
         font-weight: bold;
         margin-bottom: 0.5rem;
     }}
     
     .info-box {{
-        background-color: #f8f9fa;
+        background-color: #2C2C2E; /* Slightly lighter dark color */
         padding: 1rem;
         border-radius: 0.5rem;
-        border-left: 4px solid #ff4b4b;
+        border-left: 4px solid #FF4500; /* Fiery orange-red */
         margin-bottom: 1rem;
         font-size: 0.95rem;
-        color: #2c3e50;
+        color: #D3D3D3; /* Light gray */
+        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .metric-card {{
-        background-color: white;
+        background-color: #2C2C2E; /* Slightly lighter dark color */
         padding: 0.8rem;
         border-radius: 0.5rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -203,67 +207,75 @@ st.markdown(f"""
         display: flex;
         flex-direction: column;
         justify-content: center;
+        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .metric-value {{
         font-size: 1.5rem;
         font-weight: bold;
-        color: #ff4b4b;
+        color: #FF4500; /* Fiery orange-red */
         line-height: 1.2;
     }}
     
     .metric-label {{
         font-size: 0.9rem;
-        color: #7f8c8d;
+        color: #D3D3D3; /* Light gray */
         margin-bottom: 0.3rem;
     }}
     
     .risk-high {{
-        color: #ff4b4b;
+        color: #FF4500; /* Fiery orange-red */
         font-weight: bold;
-        background-color: #ffebee;
+        background-color: rgba(255, 69, 0, 0.2); /* Semi-transparent orange-red */
         padding: 0.5rem;
         border-radius: 0.3rem;
         text-align: center;
         margin: 0.5rem 0;
+        border: 1px solid #FF4500; /* Fiery orange-red */
     }}
     
     .risk-medium {{
-        color: #f39c12;
+        color: #FF8C00; /* Darker orange */
         font-weight: bold;
-        background-color: #fff3e0;
+        background-color: rgba(255, 140, 0, 0.2); /* Semi-transparent orange */
         padding: 0.5rem;
         border-radius: 0.3rem;
         text-align: center;
         margin: 0.5rem 0;
+        border: 1px solid #FF8C00; /* Darker orange */
     }}
     
     .risk-low {{
-        color: #27ae60;
+        color: #00FF00; /* Green */
         font-weight: bold;
-        background-color: #e8f5e9;
+        background-color: rgba(0, 255, 0, 0.2); /* Semi-transparent green */
         padding: 0.5rem;
         border-radius: 0.3rem;
         text-align: center;
         margin: 0.5rem 0;
+        border: 1px solid #00FF00; /* Green */
     }}
     
     .stTabs [data-baseweb="tab-list"] {{
         gap: 4px;
+        background-color: #1C1C1E; /* Dark charcoal */
+        border-bottom: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .stTabs [data-baseweb="tab"] {{
         height: 40px;
         white-space: pre-wrap;
-        background-color: #1E90FF;
+        background-color: #2C2C2E; /* Slightly lighter dark color */
         border-radius: 4px 4px 0px 0px;
         padding: 8px 12px;
-        color: white;
+        color: #D3D3D3; /* Light gray */
+        border: 1px solid #3A3A3C; /* Subtle dark gray border */
+        margin-right: 4px;
     }}
     
     .stTabs [aria-selected="true"] {{
-        background-color: #0066CC;
-        color: white;
+        background-color: #FF4500; /* Fiery orange-red */
+        color: #FFFFFF; /* White */
     }}
     
     .stats-table {{
@@ -271,45 +283,48 @@ st.markdown(f"""
         border-collapse: collapse;
         margin: 0.5rem 0;
         font-size: 0.85rem;
+        color: #D3D3D3; /* Light gray */
     }}
     
     .stats-table th, .stats-table td {{
-        border: 1px solid #ddd;
+        border: 1px solid #3A3A3C; /* Subtle dark gray border */
         padding: 6px;
         text-align: left;
     }}
     
     .stats-table th {{
-        background-color: #ff4b4b;
-        color: white;
+        background-color: #FF4500; /* Fiery orange-red */
+        color: #FFFFFF; /* White */
         font-weight: bold;
     }}
     
     .stats-table tr:nth-child(even) {{
-        background-color: #f8f9fa;
+        background-color: #2C2C2E; /* Slightly lighter dark color */
     }}
     
     .simulation-control {{
-        background-color: #f8f9fa;
+        background-color: #2C2C2E; /* Slightly lighter dark color */
         padding: 0.8rem;
         border-radius: 0.5rem;
         margin-bottom: 0.8rem;
+        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .simulation-control h4 {{
         margin: 0 0 0.5rem 0;
-        color: #2c3e50;
+        color: #D3D3D3; /* Light gray */
         font-size: 1rem;
     }}
     
     .stImage > div > div > img {{
         border-radius: 0.5rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .stButton > button {{
-        background-color: #ff4b4b;
-        color: white;
+        background-color: #FF4500; /* Fiery orange-red */
+        color: #FFFFFF; /* White */
         border: none;
         padding: 0.5rem 1rem;
         border-radius: 0.3rem;
@@ -318,13 +333,14 @@ st.markdown(f"""
     }}
     
     .stButton > button:hover {{
-        background-color: #e63c3c;
-        color: white;
+        background-color: #E63900; /* Darker orange-red on hover */
+        color: #FFFFFF; /* White */
     }}
     
     .element-container:has(> .stDeckGlJsonChart) {{
         border-radius: 0.5rem;
         overflow: hidden;
+        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     [data-testid="column"] {{
@@ -333,14 +349,17 @@ st.markdown(f"""
     
     .stTabs [data-baseweb="tab-panel"] {{
         padding: 1rem 0;
+        background-color: #1C1C1E; /* Dark charcoal */
+        border-radius: 0 0 4px 4px;
+        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .no-data-warning {{
-        background-color: #fff3cd;
-        color: #856404;
+        background-color: rgba(255, 69, 0, 0.2); /* Semi-transparent orange-red */
+        color: #FF4500; /* Fiery orange-red */
         padding: 1rem;
         border-radius: 0.5rem;
-        border: 1px solid #ffeaa7;
+        border: 1px solid #FF4500; /* Fiery orange-red */
         text-align: center;
         margin: 1rem 0;
     }}
@@ -356,6 +375,52 @@ st.markdown(f"""
     .element-container:has(> [data-testid="stMarkdownContainer"] > div > div > .sub-header) {{
         color: #ffffff;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    }}
+    
+    /* Input fields and text boxes */
+    .stTextInput > div > div > input, 
+    .stNumberInput > div > div > input,
+    .stTextArea > div > div > textarea {{
+        background-color: #2C2C2E !important; /* Slightly lighter dark color */
+        color: #D3D3D3 !important; /* Light gray */
+        border: 1px solid #3A3A3C !important; /* Subtle dark gray border */
+    }}
+    
+    .stSlider > div > div > div {{
+        background-color: #2C2C2E !important; /* Slightly lighter dark color */
+    }}
+    
+    .stSlider > div > div > div > div {{
+        background-color: #FF4500 !important; /* Fiery orange-red */
+    }}
+    
+    .stCheckbox > label {{
+        color: #D3D3D3 !important; /* Light gray */
+    }}
+    
+    /* Progress bar styling */
+    .stProgress > div > div > div {{
+        background-color: #FF4500 !important; /* Fiery orange-red */
+    }}
+    
+    /* Select box styling */
+    .stSelectbox > div > div {{
+        background-color: #2C2C2E !important; /* Slightly lighter dark color */
+        color: #D3D3D3 !important; /* Light gray */
+        border: 1px solid #3A3A3C !important; /* Subtle dark gray border */
+    }}
+    
+    /* Expander styling */
+    .streamlit-expanderHeader {{
+        background-color: #2C2C2E !important; /* Slightly lighter dark color */
+        color: #D3D3D3 !important; /* Light gray */
+        border: 1px solid #3A3A3C !important; /* Subtle dark gray border */
+    }}
+    
+    .streamlit-expanderContent {{
+        background-color: #1C1C1E !important; /* Dark charcoal */
+        color: #D3D3D3 !important; /* Light gray */
+        border: 1px solid #3A3A3C !important; /* Subtle dark gray border */
     }}
 </style>
 """, unsafe_allow_html=True)
