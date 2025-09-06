@@ -323,10 +323,10 @@ def get_live_weather_data(lat, lon):
         response.raise_for_status()
         data = response.json()
         return {
-            'temp': data['main']['temp'],
-            'humidity': data['main']['humidity'],
-            'wind_speed': data['wind']['speed'],
-            'wind_deg': data['wind'].get('deg', 0) # Use .get for safety
+            'Temperature': data['main']['temp'],
+            'Humidity': data['main']['humidity'],
+            'Wind speed': data['wind']['speed'],
+            'Wind Degree': data['wind'].get('deg', 0) # Use .get for safety
         }
     except Exception as e:
         return None
