@@ -37,7 +37,7 @@ def get_base64_of_image(image_path):
         return base64.b64encode(img_file.read()).decode()
     
 # Add the background image with CSS that covers everything
-image_base64 = get_base64_of_image("1817788.jpg")
+image_base64 = get_base64_of_image("background.png")
 st.markdown(
     f"""
     <style>
@@ -100,18 +100,6 @@ st.markdown(f"""
         margin: 0 !important;
         padding: 0 !important;
         overflow: visible !important;
-    }}
-    
-    /* ... (other CSS rules) ... */
-    
-    /* Add this new rule to center align values in dataframe cells */
-    .stDataFrame [data-testid="stDataFrame"] td {{
-        text-align: center !important;
-    }}
-    
-    /* Ensure the column headers are also centered for consistency */
-    .stDataFrame [data-testid="stDataFrame"] th {{
-        text-align: center !important;
     }}
     
     /* Adjust background position to account for Streamlit header */
@@ -395,10 +383,10 @@ def get_live_weather_data(lat, lon):
         response.raise_for_status()
         data = response.json()
         return {
-            'Temp': data['main']['temp'],
-            'Humidity': data['main']['humidity'],
-            'Wind Speed': data['wind']['speed'],
-            'Wind Degree': data['wind'].get('deg', 0) # Use .get for safety
+            'temp': data['main']['temp'],
+            'humidity': data['main']['humidity'],
+            'wind_speed': data['wind']['speed'],
+            'wind_deg': data['wind'].get('deg', 0) # Use .get for safety
         }
     except Exception as e:
         return None
