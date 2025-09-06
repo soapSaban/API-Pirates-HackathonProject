@@ -67,13 +67,11 @@ st.markdown(
     
     /* Ensure the main content area doesn't cut off the background */
     .main .block-container {{
-        background-color: rgba(28, 28, 30, 0.95); /* Dark charcoal background */
+        background-color: rgba(255, 255, 255, 0.9);
         border-radius: 10px;
         padding: 2rem;
         margin: 2rem 1rem 1rem 1rem;
         max-width: 95%;
-        color: #D3D3D3; /* Light gray text */
-        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     /* Fix for Streamlit's default padding that might cut off the background */
@@ -125,15 +123,13 @@ st.markdown(f"""
     
     /* Main content container with transparency */
     .main .block-container {{
-        background-color: rgba(28, 28, 30, 0.95); /* Dark charcoal background */
+        background-color: rgba(255, 255, 255, 0.92);
         border-radius: 10px;
         padding: 2rem;
         margin: 2rem 1rem 1rem 1rem;
         backdrop-filter: blur(5px);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         max-width: 95%;
-        color: #D3D3D3; /* Light gray text */
-        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
 
     /* Title container with proper centering */
@@ -149,7 +145,7 @@ st.markdown(f"""
     
     .main-header {{
         font-size: 2.5rem;
-        color: #FF4500; /* Fiery orange-red */
+        color: #ff4b4b;
         text-align: center;
         margin: 0 auto 0.5rem auto;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
@@ -160,44 +156,43 @@ st.markdown(f"""
     .subtitle {{
         text-align: center;
         font-size: 1.1rem;
-        color: #ffffff; /* White */
+        color: #ffffff; /* Changed to white */
         margin: 0 auto 1.5rem auto;
         width: 100%;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Added text shadow for better visibility */
         font-weight: 500;
     }}
     
     .sub-header {{
         font-size: 1.4rem;
-        color: #ffffff; /* White */
-        border-bottom: 2px solid #FF4500; /* Fiery orange-red */
+        color: #ffffff; /* Changed to white */
+        border-bottom: 2px solid #ff4b4b;
         padding-bottom: 0.3rem;
         margin-top: 1.2rem;
         margin-bottom: 0.8rem;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Added text shadow for better visibility */
         font-weight: 600;
     }}
     
     .section-header {{
         font-size: 1.2rem;
-        color: #D3D3D3; /* Light gray */
+        color: #2c3e50;
         font-weight: bold;
         margin-bottom: 0.5rem;
     }}
     
     .info-box {{
-        background-color: #2C2C2E; /* Slightly lighter dark color */
+        background-color: #f8f9fa;
         padding: 1rem;
         border-radius: 0.5rem;
-        border-left: 4px solid #FF4500; /* Fiery orange-red */
+        border-left: 4px solid #ff4b4b;
         margin-bottom: 1rem;
         font-size: 0.95rem;
-        color: #D3D3D3; /* Light gray */
-        border: 1px solid #3A3A3C; /* Subtle dark gray border */
+        color: #2c3e50;
     }}
     
     .metric-card {{
-        background-color: #2C2C2E; /* Slightly lighter dark color */
+        background-color: white;
         padding: 0.8rem;
         border-radius: 0.5rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -207,75 +202,67 @@ st.markdown(f"""
         display: flex;
         flex-direction: column;
         justify-content: center;
-        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .metric-value {{
         font-size: 1.5rem;
         font-weight: bold;
-        color: #FF4500; /* Fiery orange-red */
+        color: #ff4b4b;
         line-height: 1.2;
     }}
     
     .metric-label {{
         font-size: 0.9rem;
-        color: #D3D3D3; /* Light gray */
+        color: #7f8c8d;
         margin-bottom: 0.3rem;
     }}
     
     .risk-high {{
-        color: #FF4500; /* Fiery orange-red */
+        color: #ff4b4b;
         font-weight: bold;
-        background-color: rgba(255, 69, 0, 0.2); /* Semi-transparent orange-red */
+        background-color: #ffebee;
         padding: 0.5rem;
         border-radius: 0.3rem;
         text-align: center;
         margin: 0.5rem 0;
-        border: 1px solid #FF4500; /* Fiery orange-red */
     }}
     
     .risk-medium {{
-        color: #FF8C00; /* Darker orange */
+        color: #f39c12;
         font-weight: bold;
-        background-color: rgba(255, 140, 0, 0.2); /* Semi-transparent orange */
+        background-color: #fff3e0;
         padding: 0.5rem;
         border-radius: 0.3rem;
         text-align: center;
         margin: 0.5rem 0;
-        border: 1px solid #FF8C00; /* Darker orange */
     }}
     
     .risk-low {{
-        color: #00FF00; /* Green */
+        color: #27ae60;
         font-weight: bold;
-        background-color: rgba(0, 255, 0, 0.2); /* Semi-transparent green */
+        background-color: #e8f5e9;
         padding: 0.5rem;
         border-radius: 0.3rem;
         text-align: center;
         margin: 0.5rem 0;
-        border: 1px solid #00FF00; /* Green */
     }}
     
     .stTabs [data-baseweb="tab-list"] {{
         gap: 4px;
-        background-color: #1C1C1E; /* Dark charcoal */
-        border-bottom: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .stTabs [data-baseweb="tab"] {{
         height: 40px;
         white-space: pre-wrap;
-        background-color: #2C2C2E; /* Slightly lighter dark color */
+        background-color: #1E90FF;
         border-radius: 4px 4px 0px 0px;
         padding: 8px 12px;
-        color: #D3D3D3; /* Light gray */
-        border: 1px solid #3A3A3C; /* Subtle dark gray border */
-        margin-right: 4px;
+        color: white;
     }}
     
     .stTabs [aria-selected="true"] {{
-        background-color: #FF4500; /* Fiery orange-red */
-        color: #FFFFFF; /* White */
+        background-color: #0066CC;
+        color: white;
     }}
     
     .stats-table {{
@@ -283,48 +270,45 @@ st.markdown(f"""
         border-collapse: collapse;
         margin: 0.5rem 0;
         font-size: 0.85rem;
-        color: #D3D3D3; /* Light gray */
     }}
     
     .stats-table th, .stats-table td {{
-        border: 1px solid #3A3A3C; /* Subtle dark gray border */
+        border: 1px solid #ddd;
         padding: 6px;
         text-align: left;
     }}
     
     .stats-table th {{
-        background-color: #FF4500; /* Fiery orange-red */
-        color: #FFFFFF; /* White */
+        background-color: #ff4b4b;
+        color: white;
         font-weight: bold;
     }}
     
     .stats-table tr:nth-child(even) {{
-        background-color: #2C2C2E; /* Slightly lighter dark color */
+        background-color: #f8f9fa;
     }}
     
     .simulation-control {{
-        background-color: #2C2C2E; /* Slightly lighter dark color */
+        background-color: #f8f9fa;
         padding: 0.8rem;
         border-radius: 0.5rem;
         margin-bottom: 0.8rem;
-        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .simulation-control h4 {{
         margin: 0 0 0.5rem 0;
-        color: #D3D3D3; /* Light gray */
+        color: #2c3e50;
         font-size: 1rem;
     }}
     
     .stImage > div > div > img {{
         border-radius: 0.5rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .stButton > button {{
-        background-color: #FF4500; /* Fiery orange-red */
-        color: #FFFFFF; /* White */
+        background-color: #ff4b4b;
+        color: white;
         border: none;
         padding: 0.5rem 1rem;
         border-radius: 0.3rem;
@@ -333,14 +317,13 @@ st.markdown(f"""
     }}
     
     .stButton > button:hover {{
-        background-color: #E63900; /* Darker orange-red on hover */
-        color: #FFFFFF; /* White */
+        background-color: #e63c3c;
+        color: white;
     }}
     
     .element-container:has(> .stDeckGlJsonChart) {{
         border-radius: 0.5rem;
         overflow: hidden;
-        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     [data-testid="column"] {{
@@ -349,17 +332,14 @@ st.markdown(f"""
     
     .stTabs [data-baseweb="tab-panel"] {{
         padding: 1rem 0;
-        background-color: #1C1C1E; /* Dark charcoal */
-        border-radius: 0 0 4px 4px;
-        border: 1px solid #3A3A3C; /* Subtle dark gray border */
     }}
     
     .no-data-warning {{
-        background-color: rgba(255, 69, 0, 0.2); /* Semi-transparent orange-red */
-        color: #FF4500; /* Fiery orange-red */
+        background-color: #fff3cd;
+        color: #856404;
         padding: 1rem;
         border-radius: 0.5rem;
-        border: 1px solid #FF4500; /* Fiery orange-red */
+        border: 1px solid #ffeaa7;
         text-align: center;
         margin: 1rem 0;
     }}
@@ -375,52 +355,6 @@ st.markdown(f"""
     .element-container:has(> [data-testid="stMarkdownContainer"] > div > div > .sub-header) {{
         color: #ffffff;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
-    }}
-    
-    /* Input fields and text boxes */
-    .stTextInput > div > div > input, 
-    .stNumberInput > div > div > input,
-    .stTextArea > div > div > textarea {{
-        background-color: #2C2C2E !important; /* Slightly lighter dark color */
-        color: #D3D3D3 !important; /* Light gray */
-        border: 1px solid #3A3A3C !important; /* Subtle dark gray border */
-    }}
-    
-    .stSlider > div > div > div {{
-        background-color: #2C2C2E !important; /* Slightly lighter dark color */
-    }}
-    
-    .stSlider > div > div > div > div {{
-        background-color: #FF4500 !important; /* Fiery orange-red */
-    }}
-    
-    .stCheckbox > label {{
-        color: #D3D3D3 !important; /* Light gray */
-    }}
-    
-    /* Progress bar styling */
-    .stProgress > div > div > div {{
-        background-color: #FF4500 !important; /* Fiery orange-red */
-    }}
-    
-    /* Select box styling */
-    .stSelectbox > div > div {{
-        background-color: #2C2C2E !important; /* Slightly lighter dark color */
-        color: #D3D3D3 !important; /* Light gray */
-        border: 1px solid #3A3A3C !important; /* Subtle dark gray border */
-    }}
-    
-    /* Expander styling */
-    .streamlit-expanderHeader {{
-        background-color: #2C2C2E !important; /* Slightly lighter dark color */
-        color: #D3D3D3 !important; /* Light gray */
-        border: 1px solid #3A3A3C !important; /* Subtle dark gray border */
-    }}
-    
-    .streamlit-expanderContent {{
-        background-color: #1C1C1E !important; /* Dark charcoal */
-        color: #D3D3D3 !important; /* Light gray */
-        border: 1px solid #3A3A3C !important; /* Subtle dark gray border */
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -447,13 +381,14 @@ def initialize_gee():
 def load_model():
     """Loads the pre-trained model and scaler."""
     try:
-        model = joblib.load('model/fire_prediction_model.joblib')
-        scaler = joblib.load('model/feature_scaler.joblib')
-        feature_names = joblib.load('model/feature_names.joblib')
+        model = joblib.load('model/best_model.pkl')
+        scaler = joblib.load('model/scaler.pkl')
+        feature_names = joblib.load('model/feature_names.pkl')
         return model, scaler, feature_names
     except FileNotFoundError:
+        st.error("Model files not found. Please make sure you've trained and saved the model first.")
         return None, None, None
-    
+
 # --- Data Fetching Functions ---
 def get_live_weather_data(lat, lon):
     """Fetches live weather data from OpenWeatherMap."""
@@ -469,10 +404,54 @@ def get_live_weather_data(lat, lon):
             'temp': data['main']['temp'],
             'humidity': data['main']['humidity'],
             'wind_speed': data['wind']['speed'],
-            'wind_deg': data['wind'].get('deg', 0) # Use .get for safety
+            'wind_deg': data['wind'].get('deg', 0)
         }
     except Exception as e:
         return None
+
+def get_precipitation_data(lat, lon):
+    """Get precipitation data from Open-Meteo API (Free)"""
+    try:
+        url = f"https://api.open-meteo.com/v1/forecast"
+        params = {
+            'latitude': lat,
+            'longitude': lon,
+            'current': 'precipitation',
+            'hourly': 'precipitation',
+            'timezone': 'auto',
+            'forecast_days': 2
+        }
+        response = requests.get(url, params=params, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        
+        # Current precipitation in mm
+        current_rain = data.get('current', {}).get('precipitation', 0)
+        
+        # Get hourly precipitation for the last 24 hours and next 24 hours
+        hourly_rain = data.get('hourly', {}).get('precipitation', [0]*48)
+        
+        # Calculate average rainfall for the last 24 hours (more relevant for fire risk)
+        past_24h_rain = hourly_rain[:24]  # First 24 hours are past data
+        avg_24h_rain = sum(past_24h_rain) / len(past_24h_rain) if past_24h_rain else 0
+        
+        return {
+            'current_rain_mm': max(0, current_rain),
+            'avg_24h_rain_mm': max(0, avg_24h_rain),
+            'hourly_forecast': [max(0, r) for r in hourly_rain[24:48]]  # Next 24 hours
+        }
+    except Exception as e:
+        # Return conservative estimates if API fails
+        return {'current_rain_mm': 0, 'avg_24h_rain_mm': 0, 'hourly_forecast': [0]*24}
+
+def get_rainfall_data(lat, lon):
+    """Get rainfall data for model prediction"""
+    try:
+        precipitation_data = get_precipitation_data(lat, lon)
+        # Use average of last 24 hours rainfall for better prediction
+        return max(0, precipitation_data['avg_24h_rain_mm'])
+    except:
+        return 0.0
 
 def format_feature_names(features_dict):
     """
@@ -483,14 +462,16 @@ def format_feature_names(features_dict):
     
     # Mapping of feature names to human-readable names and units
     feature_mapping = {
+        'X': {'name': 'Spatial Coordinate X', 'unit': '', 'format': '{:.1f}'},
+        'Y': {'name': 'Spatial Coordinate Y', 'unit': '', 'format': '{:.1f}'},
+        'FFMC': {'name': 'Fine Fuel Moisture Code', 'unit': '', 'format': '{:.1f}'},
+        'DMC': {'name': 'Duff Moisture Code', 'unit': '', 'format': '{:.1f}'},
+        'DC': {'name': 'Drought Code', 'unit': '', 'format': '{:.1f}'},
+        'ISI': {'name': 'Initial Spread Index', 'unit': '', 'format': '{:.1f}'},
         'temp': {'name': 'Temperature', 'unit': '°C', 'format': '{:.1f}'},
-        'humidity': {'name': 'Humidity', 'unit': '%', 'format': '{:.0f}'},
-        'wind_speed': {'name': 'Wind Speed', 'unit': 'm/s', 'format': '{:.2f}'},
-        'wind_deg': {'name': 'Wind Direction', 'unit': 'degrees', 'format': '{:.0f}'},
-        'aspect': {'name': 'Aspect', 'unit': 'degrees', 'format': '{:.1f}'},
-        'lst': {'name': 'Land Surface Temperature', 'unit': '°C', 'format': '{:.1f}'},
-        'ndvi': {'name': 'NDVI (Vegetation Index)', 'unit': '', 'format': '{:.3f}'},
-        'slope': {'name': 'Slope', 'unit': 'degrees', 'format': '{:.1f}'}
+        'RH': {'name': 'Relative Humidity', 'unit': '%', 'format': '{:.0f}'},
+        'wind': {'name': 'Wind Speed', 'unit': 'km/h', 'format': '{:.1f}'},
+        'rain': {'name': 'Rainfall (24h avg)', 'unit': 'mm', 'format': '{:.2f}'}
     }
     
     formatted_features = {}
@@ -500,17 +481,73 @@ def format_feature_names(features_dict):
             mapping = feature_mapping[key]
             try:
                 formatted_value = mapping['format'].format(value)
-                formatted_name = f"{mapping['name']} ({mapping['unit']})" if mapping['unit'] else mapping['name']
+                formatted_name = f"{mapping['name']}"
+                if mapping['unit']:
+                    formatted_name += f" ({mapping['unit']})"
                 formatted_features[formatted_name] = formatted_value
             except (ValueError, TypeError):
-                # If formatting fails, use the original value
-                formatted_name = f"{mapping['name']} ({mapping['unit']})" if mapping['unit'] else mapping['name']
+                formatted_name = f"{mapping['name']}"
+                if mapping['unit']:
+                    formatted_name += f" ({mapping['unit']})"
                 formatted_features[formatted_name] = str(value)
         else:
-            # Keep unknown features as is
             formatted_features[key] = value
     
     return formatted_features
+
+def adapt_features_to_model(weather_data, gee_data, lat, lon):
+    """
+    Convert available weather and GEE data to the format expected by the trained model.
+    This function maps your available data to the model's expected features with real rainfall data.
+    """
+    # Get real rainfall data from Open-Meteo API
+    rain_data = get_rainfall_data(lat, lon)
+    
+    # Default values based on the forestfires.csv dataset statistics
+    default_values = {
+        'X': max(1, min(9, round(abs(lat) * 0.5))),  # Map lat to X (1-9)
+        'Y': max(2, min(9, round(abs(lon) * 0.2))),  # Map lon to Y (2-9)
+        'FFMC': 90.0, 'DMC': 100.0, 'DC': 500.0, 'ISI': 8.0,
+        'temp': 20.0, 'RH': 50.0, 'wind': 4.0, 'rain': rain_data
+    }
+    
+    # Start with default values
+    adapted_features = default_values.copy()
+    
+    # Map available weather data to model features
+    if weather_data:
+        adapted_features['temp'] = weather_data.get('temp', adapted_features['temp'])
+        adapted_features['RH'] = weather_data.get('humidity', adapted_features['RH'])
+        adapted_features['wind'] = weather_data.get('wind_speed', adapted_features['wind'])
+        # Keep the real rain data from Open-Meteo
+    
+    # Map GEE data to model features (scientifically informed approximations)
+    if gee_data:
+        ndvi = gee_data.get('ndvi', 0.5)
+        lst = gee_data.get('lst', 25.0)
+        slope = gee_data.get('slope', 10.0)
+        
+        # Refined approximations based on fire science principles
+        # FFMC: Higher temperature → lower moisture → higher FFMC
+        adapted_features['FFMC'] = 82.0 + (lst - 20.0) * 0.6
+        
+        # DMC: Lower vegetation → higher duff moisture code
+        adapted_features['DMC'] = 50.0 + (1.0 - ndvi) * 120.0
+        
+        # DC: Long-term drought effect, influenced by vegetation
+        adapted_features['DC'] = 300.0 + (1.0 - ndvi) * 500.0
+        
+        # ISI: Wind speed is primary factor, temperature has secondary effect
+        adapted_features['ISI'] = 4.0 + adapted_features['wind'] * 0.8 + (lst - 20.0) * 0.1
+    
+    # Ensure values stay within reasonable bounds
+    adapted_features['FFMC'] = max(0, min(100, adapted_features['FFMC']))
+    adapted_features['DMC'] = max(0, min(300, adapted_features['DMC']))
+    adapted_features['DC'] = max(0, min(1000, adapted_features['DC']))
+    adapted_features['ISI'] = max(0, min(50, adapted_features['ISI']))
+    adapted_features['rain'] = max(0, min(50, adapted_features['rain']))  # Cap rain at 50mm
+    
+    return adapted_features
 
 def get_gee_data(lat, lon):
     """Fetches landscape data from Google Earth Engine for a given point."""
@@ -564,7 +601,7 @@ def get_gee_data(lat, lon):
         # Ensure all expected features are present
         expected_features = ['ndvi', 'lst', 'slope', 'aspect']
         for feature in expected_features:
-            if feature not in feature_values:
+            if feature not in feature_values or feature_values[feature] is None:
                 feature_values[feature] = 0
                 
         return feature_values
@@ -1023,22 +1060,48 @@ if 'selected_point' in st.session_state:
     
     with pred_tab:
         if st.button("Predict Fire Risk", use_container_width=True, type="primary"):
-            with st.spinner("Fetching data and calculating risk..."):
-                weather_features = get_live_weather_data(point['lat'], point['lon'])
-                gee_features = get_gee_data(point['lat'], point['lon'])
+            with st.spinner("Fetching weather, satellite, and rainfall data..."):
+                # Get all available data
+                weather_data = get_live_weather_data(point['lat'], point['lon'])
+                gee_data = get_gee_data(point['lat'], point['lon'])
+                rainfall_info = get_precipitation_data(point['lat'], point['lon'])
                 
-                if weather_features and gee_features:
-                    all_features = {**weather_features, **gee_features}
+                # Show rainfall information
+                with st.expander("🌧️ Rainfall Information", expanded=True):
+                    rain_col1, rain_col2 = st.columns(2)
+                    with rain_col1:
+                        st.metric("Current Rainfall", f"{rainfall_info['current_rain_mm']:.1f} mm")
+                    with rain_col2:
+                        st.metric("24h Average Rainfall", f"{rainfall_info['avg_24h_rain_mm']:.1f} mm")
+                    
+                    # Show rainfall chart
+                    if rainfall_info['hourly_forecast']:
+                        fig, ax = plt.subplots(figsize=(10, 4))
+                        hours = list(range(24))
+                        ax.bar(hours, rainfall_info['hourly_forecast'][:24], alpha=0.7, color='blue')
+                        ax.set_xlabel('Hours from now')
+                        ax.set_ylabel('Precipitation (mm)')
+                        ax.set_title('24-hour Rainfall Forecast')
+                        ax.grid(True, alpha=0.3)
+                        st.pyplot(fig)
+                
+                if weather_data or gee_data:
+                    # Adapt features with real rainfall data
+                    model_features = adapt_features_to_model(weather_data, gee_data, 
+                                                           point['lat'], point['lon'])
                     
                     # Ensure we have all required features
                     if feature_names:
-                        feature_vector = [all_features.get(name, 0) for name in feature_names]
+                        feature_vector = [model_features[name] for name in feature_names]
                         
                         try:
+                            # Scale the features
                             scaled_features = scaler.transform([feature_vector])
+                            
+                            # Make prediction
                             prediction_prob = model.predict_proba(scaled_features)[0][1]
                             
-                            # Display risk with appropriate styling
+                            # Display results
                             st.markdown(f"""
                             <div class="metric-card">
                                 <div class="metric-label">Fire Risk Probability</div>
@@ -1046,6 +1109,7 @@ if 'selected_point' in st.session_state:
                             </div>
                             """, unsafe_allow_html=True)
                             
+                            # Risk assessment
                             if prediction_prob > 0.7:
                                 st.markdown('<p class="risk-high">🚨 High Risk Area - Immediate attention required</p>', unsafe_allow_html=True)
                             elif prediction_prob > 0.4:
@@ -1053,22 +1117,34 @@ if 'selected_point' in st.session_state:
                             else:
                                 st.markdown('<p class="risk-low">✅ Low Risk Area - Normal conditions</p>', unsafe_allow_html=True)
                                 
-                            # Show feature values for debugging
+                            # Show feature values
                             with st.expander("Show Detailed Feature Values", expanded=False):
-                                # Format the feature names and values
-                                formatted_features = format_feature_names(all_features)
+                                formatted_features = format_feature_names(model_features)
                                 if formatted_features:
                                     feature_df = pd.DataFrame.from_dict(formatted_features, orient='index', columns=['Value'])
                                     st.dataframe(feature_df, use_container_width=True)
                                 else:
                                     st.write("No feature data available")
-                                
+                                    
+                            # Add explanation of feature mapping
+                            with st.expander("How features are calculated", expanded=False):
+                                st.info("""
+                                **Feature Mapping Explanation:**
+                                - **X, Y**: Mapped from coordinates
+                                - **FFMC**: Based on temperature and vegetation (higher temp → lower moisture → higher FFMC)
+                                - **DMC**: Based on vegetation density (lower vegetation → higher duff moisture)
+                                - **DC**: Long-term drought effect influenced by vegetation
+                                - **ISI**: Based on wind speed and temperature
+                                - **temp, RH, wind**: From live weather data
+                                - **rain**: Real rainfall data from Open-Meteo API (24h average)
+                                """)
+                                    
                         except Exception as e:
-                            st.error(f"Error making prediction: {e}")
+                            st.error(f"Error making prediction: {str(e)}")
                     else:
                         st.error("Feature names not available for prediction.")
                 else:
-                    st.error("Could not fetch all required data for prediction.")
+                    st.error("Could not fetch data for prediction. Please try another location.")
     
     with sim_tab:
         st.markdown('<div class="sub-header">Simulation Parameters</div>', unsafe_allow_html=True)
