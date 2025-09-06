@@ -37,7 +37,7 @@ def get_base64_of_image(image_path):
         return base64.b64encode(img_file.read()).decode()
     
 # Add the background image with CSS that covers everything
-image_base64 = get_base64_of_image("1817860.jpg")
+image_base64 = get_base64_of_image("1817788.jpg")
 st.markdown(
     f"""
     <style>
@@ -100,6 +100,18 @@ st.markdown(f"""
         margin: 0 !important;
         padding: 0 !important;
         overflow: visible !important;
+    }}
+    
+    /* ... (other CSS rules) ... */
+    
+    /* Add this new rule to center align values in dataframe cells */
+    .stDataFrame [data-testid="stDataFrame"] td {{
+        text-align: center !important;
+    }}
+    
+    /* Ensure the column headers are also centered for consistency */
+    .stDataFrame [data-testid="stDataFrame"] th {{
+        text-align: center !important;
     }}
     
     /* Adjust background position to account for Streamlit header */
@@ -390,6 +402,44 @@ def get_live_weather_data(lat, lon):
         }
     except Exception as e:
         return None
+
+def format_feature_names(features_dict):
+    """
+    Converts raw feature names and values to human-readable format with proper units.
+    """
+    if not features_dict:
+        return None
+    
+    # Mapping of feature names to human-readable names and units
+    feature_mapping = {
+        'temp': {'name': 'Temperature', 'unit': '°C', 'format': '{:.1f}'},
+        'humidity': {'name': 'Humidity', 'unit': '%', 'format': '{:.0f}'},
+        'wind_speed': {'name': 'Wind Speed', 'unit': 'm/s', 'format': '{:.2f}'},
+        'wind_deg': {'name': 'Wind Direction', 'unit': 'degrees', 'format': '{:.0f}'},
+        'aspect': {'name': 'Aspect', 'unit': 'degrees', 'format': '{:.1f}'},
+        'lst': {'name': 'Land Surface Temperature', 'unit': '°C', 'format': '{:.1f}'},
+        'ndvi': {'name': 'NDVI (Vegetation Index)', 'unit': '', 'format': '{:.3f}'},
+        'slope': {'name': 'Slope', 'unit': 'degrees', 'format': '{:.1f}'}
+    }
+    
+    formatted_features = {}
+    
+    for key, value in features_dict.items():
+        if key in feature_mapping and value is not None:
+            mapping = feature_mapping[key]
+            try:
+                formatted_value = mapping['format'].format(value)
+                formatted_name = f"{mapping['name']} ({mapping['unit']})" if mapping['unit'] else mapping['name']
+                formatted_features[formatted_name] = formatted_value
+            except (ValueError, TypeError):
+                # If formatting fails, use the original value
+                formatted_name = f"{mapping['name']} ({mapping['unit']})" if mapping['unit'] else mapping['name']
+                formatted_features[formatted_name] = str(value)
+        else:
+            # Keep unknown features as is
+            formatted_features[key] = value
+    
+    return formatted_features
 
 def get_gee_data(lat, lon):
     """Fetches landscape data from Google Earth Engine for a given point."""
@@ -934,8 +984,13 @@ if 'selected_point' in st.session_state:
                                 
                             # Show feature values for debugging
                             with st.expander("Show Detailed Feature Values", expanded=False):
-                                feature_df = pd.DataFrame.from_dict(all_features, orient='index', columns=['Value'])
-                                st.dataframe(feature_df, use_container_width=True)
+                                # Format the feature names and values
+                                formatted_features = format_feature_names(all_features)
+                                if formatted_features:
+                                    feature_df = pd.DataFrame.from_dict(formatted_features, orient='index', columns=['Value'])
+                                    st.dataframe(feature_df, use_container_width=True)
+                                else:
+                                    st.write("No feature data available")
                                 
                         except Exception as e:
                             st.error(f"Error making prediction: {e}")
