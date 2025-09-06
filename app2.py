@@ -90,6 +90,7 @@ st.markdown(
 )
 
 # Apply custom CSS for styling with static background image
+# Apply custom CSS for styling with static background image
 st.markdown(f"""
 <style>
     /* Static background image covering entire screen without being cut off */
@@ -156,18 +157,22 @@ st.markdown(f"""
     .subtitle {{
         text-align: center;
         font-size: 1.1rem;
-        color: #7f8c8d;
+        color: #ffffff; /* Changed to white */
         margin: 0 auto 1.5rem auto;
         width: 100%;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Added text shadow for better visibility */
+        font-weight: 500;
     }}
     
     .sub-header {{
         font-size: 1.4rem;
-        color: #2c3e50;
+        color: #ffffff; /* Changed to white */
         border-bottom: 2px solid #ff4b4b;
         padding-bottom: 0.3rem;
         margin-top: 1.2rem;
         margin-bottom: 0.8rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Added text shadow for better visibility */
+        font-weight: 600;
     }}
     
     .section-header {{
@@ -338,6 +343,19 @@ st.markdown(f"""
         border: 1px solid #ffeaa7;
         text-align: center;
         margin: 1rem 0;
+    }}
+    
+    /* Additional styles for the manual coordinate section */
+    .stNumberInput > label {{
+        color: #ffffff !important;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        font-weight: 500;
+    }}
+    
+    /* Style for the map section header */
+    .element-container:has(> [data-testid="stMarkdownContainer"] > div > div > .sub-header) {{
+        color: #ffffff;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
     }}
 </style>
 """, unsafe_allow_html=True)
