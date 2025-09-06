@@ -37,7 +37,7 @@ def get_base64_of_image(image_path):
         return base64.b64encode(img_file.read()).decode()
     
 # Add the background image with CSS that covers everything
-image_base64 = get_base64_of_image("background.png")
+image_base64 = get_base64_of_image("1817860.jpg")
 st.markdown(
     f"""
     <style>
@@ -826,6 +826,47 @@ st.markdown('<h1 class="main-header">Gaia\'s Prophecy🔥🌲</h1>', unsafe_allo
 st.markdown('<p class="subtitle">Advanced Forest Fire Prediction and Simulation System    </p>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
+# --- Manual Coordinate Input Section ---
+st.markdown('<div class="sub-header">Or Enter Coordinates Manually</div>', unsafe_allow_html=True)
+manual_col1, manual_col2, manual_col3 = st.columns([1, 1, 2])
+with manual_col1:
+    manual_lat = st.number_input("Latitude", min_value=-90.0, max_value=90.0, value=20.5937, format="%.6f")
+with manual_col2:
+    manual_lon = st.number_input("Longitude", min_value=-180.0, max_value=180.0, value=78.9629, format="%.6f")
+with manual_col3:
+    st.markdown("<br>", unsafe_allow_html=True)
+    if st.button("Use These Coordinates", use_container_width=True):
+        st.session_state['selected_point'] = {
+            'lat': manual_lat,
+            'lon': manual_lon
+        }
+        st.rerun()
+
+# --- Map Section (Top Landscape Area) ---
+st.markdown('<div class="sub-header">Select Location on Map</div>', unsafe_allow_html=True)
+m = folium.Map(location=[20.5937, 78.9629], zoom_start=5)
+m.add_child(folium.LatLngPopup())
+
+# If we have a selected point, center the map on it
+if 'selected_point' in st.session_state:
+    point = st.session_state['selected_point']
+    m.location = [point['lat'], point['lon']]
+    m.zoom_start = 10
+    # Add a marker for the selected point
+    folium.Marker(
+        [point['lat'], point['lon']],
+        popup=f"Selected Location: {point['lat']:.6f}, {point['lon']:.6f}"
+    ).add_to(m)
+
+map_data = st_folium(m, height=400, use_container_width=True, key="map")
+
+if map_data and map_data.get('last_clicked'):
+    st.session_state['selected_point'] = {
+        'lat': map_data['last_clicked']['lat'],
+        'lon': map_data['last_clicked']['lng']
+    }
+    st.rerun()
+
 # --- Initialize Services ---
 gee_initialized = initialize_gee()
 model, scaler, feature_names = load_model()
@@ -833,18 +874,6 @@ model, scaler, feature_names = load_model()
 # Show warning if GEE is not initialized but allow the app to continue
 if not gee_initialized:
     st.warning("⚠️ Google Earth Engine is not initialized. The app will use mock data for demonstration.")
-
-# --- Map Section (Top Landscape Area) ---
-st.markdown('<div class="sub-header">Select Location on Map</div>', unsafe_allow_html=True)
-m = folium.Map(location=[20.5937, 78.9629], zoom_start=5)
-m.add_child(folium.LatLngPopup())
-map_data = st_folium(m, height=400, use_container_width=True)
-
-if map_data and map_data.get('last_clicked'):
-    st.session_state['selected_point'] = {
-        'lat': map_data['last_clicked']['lat'],
-        'lon': map_data['last_clicked']['lng']
-    }
 
 # --- Prediction and Simulation Options ---
 if 'selected_point' in st.session_state:
