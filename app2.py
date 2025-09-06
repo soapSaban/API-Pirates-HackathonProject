@@ -1064,26 +1064,7 @@ if 'selected_point' in st.session_state:
                 # Get all available data
                 weather_data = get_live_weather_data(point['lat'], point['lon'])
                 gee_data = get_gee_data(point['lat'], point['lon'])
-                rainfall_info = get_precipitation_data(point['lat'], point['lon'])
-                
-                # Show rainfall information
-                with st.expander("🌧️ Rainfall Information", expanded=True):
-                    rain_col1, rain_col2 = st.columns(2)
-                    with rain_col1:
-                        st.metric("Current Rainfall", f"{rainfall_info['current_rain_mm']:.1f} mm")
-                    with rain_col2:
-                        st.metric("24h Average Rainfall", f"{rainfall_info['avg_24h_rain_mm']:.1f} mm")
-                    
-                    # Show rainfall chart
-                    if rainfall_info['hourly_forecast']:
-                        fig, ax = plt.subplots(figsize=(10, 4))
-                        hours = list(range(24))
-                        ax.bar(hours, rainfall_info['hourly_forecast'][:24], alpha=0.7, color='blue')
-                        ax.set_xlabel('Hours from now')
-                        ax.set_ylabel('Precipitation (mm)')
-                        ax.set_title('24-hour Rainfall Forecast')
-                        ax.grid(True, alpha=0.3)
-                        st.pyplot(fig)
+                rainfall_info = get_precipitation_data(point['lat'], point['lon'])                 
                 
                 if weather_data or gee_data:
                     # Adapt features with real rainfall data
