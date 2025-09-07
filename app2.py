@@ -1100,12 +1100,8 @@ if 'selected_point' in st.session_state:
                                 
                             # Show feature values
                             with st.expander("Show Detailed Feature Values", expanded=False):
-                                formatted_features = format_feature_names(model_features)
-                                if formatted_features:
-                                    feature_df = pd.DataFrame.from_dict(formatted_features, orient='index', columns=['Value'])
-                                    st.dataframe(feature_df, use_container_width=True)
-                                else:
-                                    st.write("No feature data available")
+                                feature_df = pd.DataFrame.from_dict(all_features, orient='index', columns=['Value'])
+                                st.dataframe(feature_df, use_container_width=True)
                                     
                             # Add explanation of feature mapping
                             with st.expander("How features are calculated", expanded=False):
