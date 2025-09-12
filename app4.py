@@ -346,6 +346,16 @@ st.markdown(f"""
         margin: 1rem 0;
     }}
     
+    .satellite-error {{
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #f5c6cb;
+        text-align: center;
+        margin: 1rem 0;
+    }}
+    
     /* Additional styles for the manual coordinate section */
     .stNumberInput > label {{
         color: #ffffff !important;
@@ -376,6 +386,7 @@ def initialize_gee():
         ee.Initialize(project=GEE_PROJECT_ID)
         return True
     except Exception as e:
+        st.warning("Google Earth Engine is not properly configured. Satellite data features will be limited.")
         return False
 
 # --- Model Loading ---
@@ -396,7 +407,15 @@ def get_live_weather_data(lat, lon):
     """Fetches live weather data from OpenWeatherMap."""
     try:
         if not OPENWEATHER_API_KEY:
-            return None
+            st.warning("OpenWeatherMap API key not configured. Using default weather values.")
+            return {
+                'temp': 25.0,
+                'humidity': 45.0,
+                'wind_speed': 5.0,
+                'wind_deg': 90.0,
+                'pressure': 1013.0,
+                'clouds': 30.0
+            }
             
         url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}&units=metric"
         response = requests.get(url, timeout=10)
@@ -411,7 +430,15 @@ def get_live_weather_data(lat, lon):
             'clouds': data['clouds']['all']
         }
     except Exception as e:
-        return None
+        st.warning("Could not fetch live weather data. Using default values.")
+        return {
+            'temp': 25.0,
+            'humidity': 45.0,
+            'wind_speed': 5.0,
+            'wind_deg': 90.0,
+            'pressure': 1013.0,
+            'clouds': 30.0
+        }
 
 def get_precipitation_data(lat, lon):
     """Get precipitation data from Open-Meteo API (Free)"""
@@ -460,6 +487,7 @@ def get_precipitation_data(lat, lon):
             'hourly_humidity_forecast': hourly_humidity[24:48]
         }
     except Exception as e:
+        st.warning("Could not fetch precipitation data. Using conservative estimates.")
         # Return conservative estimates if API fails
         return {'current_rain_mm': 0, 'current_snow_mm': 0, 'avg_24h_rain_mm': 0, 
                 'avg_temp': 20, 'avg_humidity': 50, 'hourly_forecast': [0]*24,
@@ -726,10 +754,11 @@ class EnhancedFireSimulator:
         # Get comprehensive landscape data
         self.landscape_data = self._get_landscape_data()
         
-        # Only initialize fire if we have data
-        self.has_data = self.satellite_image is not None and self.landscape_data is not None
+        # Check if we have satellite data
+        self.has_satellite_data = self.satellite_image is not None
+        self.has_landscape_data = self.landscape_data is not None
         
-        if self.has_data:
+        if self.has_satellite_data and self.has_landscape_data:
             # Start with multiple ignition points for more realistic simulation
             center = size // 2
             self.grid[center, center] = 1.0  # Main ignition point
@@ -749,7 +778,7 @@ class EnhancedFireSimulator:
         
         # State tracking
         self.burned_cells = 0
-        self.burning_cells = np.sum(self.grid >= 0.8) if self.has_data else 0
+        self.burning_cells = np.sum(self.grid >= 0.8) if (self.has_satellite_data and self.has_landscape_data) else 0
         self.time_elapsed = 0
         self.history = []
         self.fire_perimeter = set()
@@ -834,7 +863,7 @@ class EnhancedFireSimulator:
 
     def _create_fuel_map(self):
         """Create a fuel map based on NDVI values and landscape features"""
-        if not self.has_data:
+        if not (self.has_satellite_data and self.has_landscape_data):
             return np.zeros((self.size, self.size))
             
         # Base fuel from NDVI (higher NDVI = more fuel)
@@ -864,6 +893,9 @@ class EnhancedFireSimulator:
 
     def _update_fire_front(self):
         """Update the fire front and perimeter cells"""
+        if not (self.has_satellite_data and self.has_landscape_data):
+            return
+            
         # Find all burning cells
         burning_cells = set(zip(*np.where(self.grid >= 0.8)))
         
@@ -885,7 +917,7 @@ class EnhancedFireSimulator:
 
     def _calculate_spread_probability(self, r, c, weather):
         """Calculate probability of fire spreading to cell (r, c) with extreme realism"""
-        if not self.has_data:
+        if not (self.has_satellite_data and self.has_landscape_data):
             return 0  # No spread without data
             
         # Base probability based on fuel
@@ -967,6 +999,9 @@ class EnhancedFireSimulator:
 
     def _calculate_spread_direction(self, source_r, source_c, target_r, target_c, weather):
         """Calculate directional bias for fire spread"""
+        if not (self.has_satellite_data and self.has_landscape_data):
+            return 0, 0  # No direction without data
+            
         # Default direction vector (from source to target)
         dir_r, dir_c = target_r - source_r, target_c - source_c
         dir_magnitude = math.sqrt(dir_r**2 + dir_c**2)
@@ -1013,7 +1048,7 @@ class EnhancedFireSimulator:
 
     def step(self, weather, time_step=1):
         """Advance the simulation by one time step with extreme realism"""
-        if not self.has_data:
+        if not (self.has_satellite_data and self.has_landscape_data):
             # Return empty grid if no data is available
             return self.grid
             
@@ -1115,7 +1150,8 @@ class EnhancedFireSimulator:
             'percent_burned': 100 * self.burned_cells / (self.size * self.size),
             'fire_line_length': fire_line_length,
             'rate_of_spread': ros,
-            'has_data': self.has_data
+            'has_satellite_data': self.has_satellite_data,
+            'has_landscape_data': self.has_landscape_data
         }
 
     def visualize_on_map(self, ax=None):
@@ -1123,12 +1159,18 @@ class EnhancedFireSimulator:
         if ax is None:
             fig, ax = plt.subplots(figsize=(8, 8))
         
-        if not self.has_data:
-            # Display a message when no data is available
-            ax.text(0.5, 0.5, "No satellite data available\nfor this location", 
+        if not (self.has_satellite_data and self.has_landscape_data):
+            # Display a professional message when no data is available
+            ax.text(0.5, 0.5, "Satellite imagery not available for this location\n\n"
+                              "Possible reasons:\n"
+                              "• Google Earth Engine not configured\n"
+                              "• Location outside satellite coverage\n"
+                              "• Cloud cover obscuring the area\n"
+                              "• Recent imagery not available", 
                     horizontalalignment='center', verticalalignment='center',
-                    transform=ax.transAxes, fontsize=14, color='red')
-            ax.set_title("No Data Available")
+                    transform=ax.transAxes, fontsize=12, color='red',
+                    bbox=dict(boxstyle="round,pad=1", facecolor="lightyellow", alpha=0.8))
+            ax.set_title("Satellite Data Unavailable")
             ax.axis('off')
             return ax
         
@@ -1201,12 +1243,18 @@ class EnhancedFireSimulator:
         if ax is None:
             fig, ax = plt.subplots(figsize=(8, 8))
         
-        if not self.has_data:
-            # Display a message when no data is available
-            ax.text(0.5, 0.5, "No landscape data available\nfor this location", 
+        if not (self.has_satellite_data and self.has_landscape_data):
+            # Display a professional message when no data is available
+            ax.text(0.5, 0.5, "Landscape data not available for this location\n\n"
+                              "Possible reasons:\n"
+                              "• Google Earth Engine not configured\n"
+                              "• Location outside satellite coverage\n"
+                              "• Cloud cover obscuring the area\n"
+                              "• Recent imagery not available", 
                     horizontalalignment='center', verticalalignment='center',
-                    transform=ax.transAxes, fontsize=14, color='red')
-            ax.set_title("No Data Available")
+                    transform=ax.transAxes, fontsize=12, color='red',
+                    bbox=dict(boxstyle="round,pad=1", facecolor="lightyellow", alpha=0.8))
+            ax.set_title("Landscape Data Unavailable")
             ax.axis('off')
             return ax
         
@@ -1322,10 +1370,6 @@ if map_data and map_data.get('last_clicked'):
 gee_initialized = initialize_gee()
 model, scaler, feature_names = load_model()
 
-# Show warning if GEE is not initialized but allow the app to continue
-if not gee_initialized:
-    st.warning("⚠️ Google Earth Engine is not initialized. The app will use mock data for demonstration.")
-
 # --- Prediction and Simulation Options ---
 if 'selected_point' in st.session_state:
     point = st.session_state['selected_point']
@@ -1418,7 +1462,19 @@ if 'selected_point' in st.session_state:
                     else:
                         st.error("Feature names not available for prediction.")
                 else:
-                    st.error("Could not fetch data for prediction. Please try another location.")
+                    st.markdown("""
+                    <div class="satellite-error">
+                        <h3>⚠️ Satellite Data Unavailable</h3>
+                        <p>Could not fetch satellite data for this location. This could be due to:</p>
+                        <ul>
+                            <li>Google Earth Engine not being properly configured</li>
+                            <li>Location outside satellite coverage area</li>
+                            <li>Cloud cover obscuring the area</li>
+                            <li>Recent satellite imagery not available</li>
+                        </ul>
+                        <p>Please try a different location or ensure Google Earth Engine is properly set up.</p>
+                    </div>
+                    """, unsafe_allow_html=True)
     
     with sim_tab:
         st.markdown('<div class="sub-header">Simulation Parameters</div>', unsafe_allow_html=True)
@@ -1460,7 +1516,11 @@ if 'selected_point' in st.session_state:
                     weather_data = get_live_weather_data(point['lat'], point['lon'])
                     if not weather_data:
                         weather_data = {
-                           
+                            'wind_speed': 5.0,
+                            'wind_deg': 90,
+                            'humidity': 45,
+                            'temp': 25,
+                            'rain_24h': 0
                         }
                     # Add recent rainfall data
                     precipitation_data = get_precipitation_data(point['lat'], point['lon'])
@@ -1470,12 +1530,19 @@ if 'selected_point' in st.session_state:
                 simulator = EnhancedFireSimulator(point['lat'], point['lon'], size=sim_size)
                 
                 # Check if we have data for simulation
-                if not simulator.has_data:
+                if not simulator.has_satellite_data or not simulator.has_landscape_data:
                     st.markdown("""
-                    <div class="no-data-warning">
-                        <h3>⚠️ No Satellite Data Available</h3>
+                    <div class="satellite-error">
+                        <h3>⚠️ Satellite Data Unavailable</h3>
                         <p>Fire simulation cannot be displayed for this location because satellite imagery is not available.</p>
-                        <p>Please try a different location or check if Google Earth Engine is properly configured.</p>
+                        <p>Possible reasons:</p>
+                        <ul>
+                            <li>Google Earth Engine not properly configured</li>
+                            <li>Location outside satellite coverage area</li>
+                            <li>Cloud cover obscuring the area</li>
+                            <li>Recent satellite imagery not available</li>
+                        </ul>
+                        <p>Please try a different location or ensure Google Earth Engine is properly set up.</p>
                     </div>
                     """, unsafe_allow_html=True)
                     st.stop()
